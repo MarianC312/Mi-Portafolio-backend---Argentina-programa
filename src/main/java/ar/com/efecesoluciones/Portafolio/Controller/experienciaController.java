@@ -31,8 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @CrossOrigin(origins = "http://localhost:4200/")
 public class experienciaController {
     
-    @Autowired
-    private IPersonaService persoServ;
+    //@Autowired
+    //private IPersonaService persoServ;
     @Autowired
     private IExperienciaService expServ;
     
@@ -56,7 +56,7 @@ public class experienciaController {
     }
     
     @PutMapping("/editar/experiencia")
-    public boolean editarExperiencia(@RequestBody Experiencia exp){
+    public Experiencia editarExperiencia(@RequestBody Experiencia exp){
         return expServ.editarExperiencia(exp);
     }
 }

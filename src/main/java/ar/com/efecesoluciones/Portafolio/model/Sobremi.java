@@ -16,7 +16,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.lang.Nullable;
 
 /**
  *
@@ -24,36 +23,26 @@ import org.springframework.lang.Nullable;
  */
 @Getter @Setter
 @Entity
-public class Experiencia {
+public class Sobremi {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+    private String icono;
     private String titulo;
-    
-    private String periodo;
-    
-    @Nullable
-    private String logo;
-    
-    @Nullable
-    private String descripcion;
     
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "persona_id", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonIgnoreProperties({"hibernateLaziInitializer", "handler"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Persona persona;
 
-    public Experiencia() {
+    public Sobremi() {
     }
 
-    public Experiencia(Long id, String titulo, String periodo, String logo, String descripcion, Persona persona) {
+    public Sobremi(Long id, String icono, String titulo, Persona persona) {
         this.id = id;
+        this.icono = icono;
         this.titulo = titulo;
-        this.periodo = periodo;
-        this.logo = logo;
-        this.descripcion = descripcion;
         this.persona = persona;
     }
     

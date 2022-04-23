@@ -15,6 +15,6 @@ public interface IExperienciaService {
     public List<Experiencia> verExperiencias();
     public Experiencia crearExperiencia(Experiencia exp);
     public boolean eliminarExperiencia(Long id);
-    public boolean editarExperiencia(Experiencia exp);
-    
+    public Experiencia editarExperiencia(Experiencia exp);
+    public List<Experiencia> verExperienciasPorIdPersona(Long id);
 }

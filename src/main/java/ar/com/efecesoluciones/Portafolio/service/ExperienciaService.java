@@ -42,13 +42,14 @@ public class ExperienciaService implements IExperienciaService {
     }
 
     @Override
-    public boolean editarExperiencia(Experiencia exp) {
-        try{
-            expRepo.save(exp);
-            return true;
-        }catch(Exception e){
-            return false;
-        }
+    public Experiencia editarExperiencia(Experiencia exp) {
+        return expRepo.save(exp);
+    }
+
+    @Override
+    public List<Experiencia> verExperienciasPorIdPersona(Long id) {
+        //return expRepo.findAllById(id);
+        return null;
     }
 
 }

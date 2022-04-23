@@ -4,8 +4,7 @@
  */
 package ar.com.efecesoluciones.Portafolio.repository;
 
-import ar.com.efecesoluciones.Portafolio.model.Experiencia;
-import java.util.List;
+import ar.com.efecesoluciones.Portafolio.model.Sobremi;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * @author Lojito
  */
 @Repository
-public interface ExperienciaRepository extends JpaRepository <Experiencia, Long> {
+public interface SobremiRepository extends JpaRepository <Sobremi, Long> {
     
 }
