@@ -5,6 +5,8 @@
 package ar.com.efecesoluciones.Portafolio.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,10 +32,12 @@ public class Sobremi {
     private String icono;
     private String titulo;
     
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "persona_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "persona_id", nullable = true)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    //@JsonIgnoreProperties({"hibernateLaziInitializer", "handler"})
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    //@JsonIgnore
     private Persona persona;
 
     public Sobremi() {

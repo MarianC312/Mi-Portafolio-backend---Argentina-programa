@@ -5,6 +5,7 @@
 package ar.com.efecesoluciones.Portafolio.service;
 
 import ar.com.efecesoluciones.Portafolio.model.Experiencia;
+import ar.com.efecesoluciones.Portafolio.model.Persona;
 import java.util.List;
 
 /**

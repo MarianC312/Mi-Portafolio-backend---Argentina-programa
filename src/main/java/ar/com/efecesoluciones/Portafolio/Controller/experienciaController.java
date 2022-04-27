@@ -30,33 +30,53 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/")
 public class experienciaController {
-    
-    //@Autowired
-    //private IPersonaService persoServ;
     @Autowired
     private IExperienciaService expServ;
-    
+
+    @Autowired
+    private IPersonaService persoServ;
     
     @GetMapping ("/ver/experiencias")
     public ResponseEntity<List<Experiencia>> verExperiencias(){
         List<Experiencia> listaExperiencia = expServ.verExperiencias();
         //int listaSize = listaExperiencia.size();
         return new ResponseEntity<>(listaExperiencia, HttpStatus.OK);
-        
+    }
+    
+    @GetMapping ("/ver/experiencias/persona")
+    public ResponseEntity<List<Experiencia>> verExperienciasPorIdPersona(@RequestParam("persona_id") Long persona_id){
+        List<Experiencia> listaExperiencia = expServ.verExperienciasPorIdPersona(persona_id);
+        return new ResponseEntity<>(listaExperiencia, HttpStatus.OK);
     }
     
     @PostMapping ("/nueva/experiencia")
-    public Experiencia agregarExperiencia(@RequestBody Experiencia exp){
-        return expServ.crearExperiencia(exp);
+    public ResponseEntity<Experiencia> agregarExperiencia(@RequestParam("persona_id") Long persona_id ,@RequestBody Experiencia exp){
+        Persona per = persoServ.buscarPersona(persona_id);
+        if(per != null){
+            Experiencia experiencia = exp;
+            experiencia.setPersona(per);
+            experiencia = expServ.crearExperiencia(exp);
+            return new ResponseEntity<>(experiencia, HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<>(exp, HttpStatus.BAD_REQUEST);
+        }
     }
     
-    @DeleteMapping ("/borrar/experiencia")
-    public boolean borrarExperiencia(@RequestParam("id") Long id){
-        return expServ.eliminarExperiencia(id);
+    @DeleteMapping ("/eliminar/experiencia")
+    public boolean borrarExperiencia(@RequestParam("experiencia_id") Long experiencia_id){
+        return expServ.eliminarExperiencia(experiencia_id);
     }
     
     @PutMapping("/editar/experiencia")
-    public Experiencia editarExperiencia(@RequestBody Experiencia exp){
-        return expServ.editarExperiencia(exp);
+    public ResponseEntity<Experiencia> editarExperiencia(@RequestBody Experiencia exp, @RequestParam("persona_id") Long persona_id){
+        Persona per = persoServ.buscarPersona(persona_id);
+        if(per != null){
+            Experiencia experiencia = exp;
+            experiencia.setPersona(per);
+            experiencia = expServ.editarExperiencia(exp);
+            return new ResponseEntity<>(experiencia, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(exp, HttpStatus.BAD_REQUEST);
+        }
     }
 }

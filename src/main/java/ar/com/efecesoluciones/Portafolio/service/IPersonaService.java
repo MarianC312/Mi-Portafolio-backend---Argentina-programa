@@ -14,8 +14,8 @@ import ar.com.efecesoluciones.Portafolio.model.Persona;
 public interface IPersonaService {
     
     public List<Persona> verPersonas();
-    public void crearPersona(Persona per);
-    public void borrarPersona(Long id);
+    public Persona crearPersona(Persona per);
+    public boolean borrarPersona(Long id);
     public Persona buscarPersona(Long id);
-    
+    public Persona editarPersona(Persona per);
 }

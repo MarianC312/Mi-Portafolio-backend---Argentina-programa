@@ -5,10 +5,17 @@
 package ar.com.efecesoluciones.Portafolio.service;
 
 import ar.com.efecesoluciones.Portafolio.model.Experiencia;
+import ar.com.efecesoluciones.Portafolio.model.Persona;
 import ar.com.efecesoluciones.Portafolio.repository.ExperienciaRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  *
@@ -36,20 +43,19 @@ public class ExperienciaService implements IExperienciaService {
             expRepo.deleteById(id);
             return true;
         }catch(Exception e){
-            return false;
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Error al ejecutar acción.", e);
         }
         
     }
 
     @Override
     public Experiencia editarExperiencia(Experiencia exp) {
+        System.out.println(exp);
         return expRepo.save(exp);
     }
 
     @Override
-    public List<Experiencia> verExperienciasPorIdPersona(Long id) {
-        //return expRepo.findAllById(id);
-        return null;
-    }
+    @EntityGraph(value = "experiencia.persona_id", type = EntityGraphType.FETCH)
+    public List<Experiencia> verExperienciasPorIdPersona(Long id){ return null; };
 
 }

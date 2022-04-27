@@ -4,7 +4,10 @@
  */
 package ar.com.efecesoluciones.Portafolio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,10 +42,15 @@ public class Experiencia {
     @Nullable
     private String descripcion;
     
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "persona_id", nullable = false)
+    
+    //CascadeType.PERSIST permite borrar el elemento sin requerir borrar
+    //todo como lo hace ALL...
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "persona_id", nullable = true)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonIgnoreProperties({"hibernateLaziInitializer", "handler"})
+    //@JsonIgnoreProperties({"hibernateLaziInitializer", "handler"})
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    //@JsonIgnore
     private Persona persona;
 
     public Experiencia() {
@@ -57,5 +65,8 @@ public class Experiencia {
         this.persona = persona;
     }
     
+    public void setPersona(Persona pers){
+        this.persona = pers;
+    }
     
 }
