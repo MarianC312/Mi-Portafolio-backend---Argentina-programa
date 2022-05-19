@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Lojito
  */
 @RestController
+@CrossOrigin(origins = {"https://netlify.app/", "https://marianocampos.netlify.app/", "localhost", "http://localhost", "http://localhost:4200/"})
 public class educacionController {
     
     @Autowired

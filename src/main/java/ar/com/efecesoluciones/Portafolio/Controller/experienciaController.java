@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Lojito
  */
 @RestController
+@CrossOrigin(origins = {"https://netlify.app/", "https://marianocampos.netlify.app/", "localhost", "http://localhost", "http://localhost:4200/"})
 public class experienciaController {
     @Autowired
     private IExperienciaService expServ;
