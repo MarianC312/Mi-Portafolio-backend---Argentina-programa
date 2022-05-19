@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Lojito
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/")
 public class experienciaController {
     @Autowired
     private IExperienciaService expServ;

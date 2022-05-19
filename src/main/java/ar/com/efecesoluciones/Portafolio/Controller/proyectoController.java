@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Lojito
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/")
 public class proyectoController {
     
     @Autowired
