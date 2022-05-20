@@ -33,9 +33,9 @@ public class Proyecto {
     private String titulo;
     private String descripcion;
     @Nullable
-    private String urlGit;
+    private String url_git;
     @Nullable
-    private String urlDeploy;
+    private String url_deploy;
     
     @Nullable
     private String imagen;
