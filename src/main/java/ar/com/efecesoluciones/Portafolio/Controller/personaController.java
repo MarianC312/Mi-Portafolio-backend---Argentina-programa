@@ -11,14 +11,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -26,33 +20,36 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin(origins = {"https://netlify.app/", "https://marianocampos.netlify.app/", "localhost", "http://localhost", "http://localhost:4200/"})
+@RequestMapping("/persona")
 public class personaController {
     
     @Autowired
     private IPersonaService persoServ;
     
-    @GetMapping ("/ver/persona")
+    @GetMapping ("/ver/id")
     public Persona verPersonaPorId(@RequestParam("persona_id") Long persona_id){
         return persoServ.buscarPersona(persona_id);
     }
     
-    @GetMapping ("/ver/personas")
+    @GetMapping ("/ver")
     public ResponseEntity<List<Persona>> verPersonas(){
         List<Persona> listaPersona = persoServ.verPersonas();
         return new ResponseEntity<>(listaPersona, HttpStatus.OK);
     }
     
-    @PostMapping ("/nueva/persona")
+    @PostMapping ("/nueva")
     public Persona agregarPersona(@RequestBody Persona pers){
         return persoServ.crearPersona(pers);
     }
-    
-    @DeleteMapping ("/eliminar/persona")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping ("/eliminar")
     public boolean eliminarPersona(@RequestParam("id") Long id){
         return persoServ.borrarPersona(id);
     }
-    
-    @PutMapping ("/editar/persona")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping ("/editar")
     public Persona editarPersona(@RequestBody Persona pers){
         return persoServ.editarPersona(pers);
     }

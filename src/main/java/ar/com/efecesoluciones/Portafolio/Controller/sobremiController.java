@@ -12,14 +12,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -27,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin(origins = {"https://netlify.app/", "https://marianocampos.netlify.app/", "localhost", "http://localhost", "http://localhost:4200/"})
+@RequestMapping("/sobremi")
 public class sobremiController {
     
     @Autowired
@@ -35,13 +30,14 @@ public class sobremiController {
     @Autowired
     private IPersonaService persoServ;
     
-    @GetMapping ("/ver/sobremi")
+    @GetMapping ("/ver")
     public ResponseEntity<List<Sobremi>> verSobremi(){
         List<Sobremi> listaSobremi = sobremiServ.verSobremi();
         return new ResponseEntity<>(listaSobremi, HttpStatus.OK);
     }
-    
-    @PostMapping ("/nueva/sobremi")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping ("/nueva")
     public ResponseEntity<Sobremi> agregarSobremi(@RequestParam("persona_id") Long persona_id, @RequestBody Sobremi sobremi){
         Persona per = persoServ.buscarPersona(persona_id);
         if(per != null){
@@ -53,13 +49,15 @@ public class sobremiController {
             return new ResponseEntity<>(sobremi, HttpStatus.BAD_REQUEST);
         }
     }
-    
-    @DeleteMapping ("/eliminar/sobremi")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping ("/eliminar")
     public boolean eliminarSobremi(@RequestParam("sobremi_id") Long sobremi_id){
         return sobremiServ.eliminarSobremi(sobremi_id);
     }
-    
-    @PutMapping ("/editar/sobremi")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping ("/editar")
     public ResponseEntity<Sobremi> editarSobremi(@RequestBody Sobremi sobremi, @RequestParam("persona_id") Long persona_id){
         Persona per = persoServ.buscarPersona(persona_id);
         if(per != null){

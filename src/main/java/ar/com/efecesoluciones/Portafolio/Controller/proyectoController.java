@@ -14,14 +14,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -29,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin(origins = {"https://netlify.app/", "https://marianocampos.netlify.app/", "localhost", "http://localhost", "http://localhost:4200/"})
+@RequestMapping("/proyecto")
 public class proyectoController {
     
     @Autowired
@@ -37,20 +32,21 @@ public class proyectoController {
     @Autowired
     private IPersonaService persoServ;
     
-    @GetMapping ("/ver/proyecto")
+    @GetMapping ("/ver")
     public ResponseEntity<List<Proyecto>> verProyecto(){
         List<Proyecto> listaProyecto = proyServ.verProyecto();
         //int listaSize = listaExperiencia.size();
         return new ResponseEntity<>(listaProyecto, HttpStatus.OK);
     }
     
-    @GetMapping ("/ver/proyecto/persona")
+    @GetMapping ("/ver/persona")
     public ResponseEntity<List<Proyecto>> verProyectoPorIdPersona(@RequestParam("persona_id") Long persona_id){
         List<Proyecto> listaProyecto = proyServ.verProyectoPorIdPersona(persona_id);
         return new ResponseEntity<>(listaProyecto, HttpStatus.OK);
     }
-    
-    @PostMapping ("/nueva/proyecto")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping ("/nueva")
     public ResponseEntity<Proyecto> agregarProyecto(@RequestParam("persona_id") Long persona_id ,@RequestBody Proyecto proy){
         Persona per = persoServ.buscarPersona(persona_id);
         if(per != null){
@@ -62,13 +58,15 @@ public class proyectoController {
             return new ResponseEntity<>(proy, HttpStatus.BAD_REQUEST);
         }
     }
-    
-    @DeleteMapping ("/eliminar/proyecto")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping ("/eliminar")
     public boolean borrarProyecto(@RequestParam("educacion_id") Long educacion_id){
         return proyServ.eliminarProyecto(educacion_id);
     }
-    
-    @PutMapping("/editar/proyecto")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/editar")
     public ResponseEntity<Proyecto> editarProyecto(@RequestBody Proyecto proy, @RequestParam("persona_id") Long persona_id){
         Persona per = persoServ.buscarPersona(persona_id);
         if(per != null){

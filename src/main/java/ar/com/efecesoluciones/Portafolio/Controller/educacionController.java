@@ -10,16 +10,11 @@ import ar.com.efecesoluciones.Portafolio.service.IEducacionService;
 import ar.com.efecesoluciones.Portafolio.service.IPersonaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -27,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin(origins = {"https://netlify.app/", "https://marianocampos.netlify.app/", "localhost", "http://localhost", "http://localhost:4200/"})
+@RequestMapping("/educacion")
 public class educacionController {
     
     @Autowired
@@ -35,20 +31,21 @@ public class educacionController {
     @Autowired
     private IPersonaService persoServ;
     
-    @GetMapping ("/ver/educacion")
+    @GetMapping ("/ver")
     public ResponseEntity<List<Educacion>> verEducacion(){
         List<Educacion> listaEducacion = eduServ.verEducacion();
         //int listaSize = listaExperiencia.size();
         return new ResponseEntity<>(listaEducacion, HttpStatus.OK);
     }
     
-    @GetMapping ("/ver/educacion/persona")
+    @GetMapping ("/ver/persona")
     public ResponseEntity<List<Educacion>> verEducacionPorIdPersona(@RequestParam("persona_id") Long persona_id){
         List<Educacion> listaEducacion = eduServ.verEducacionPorIdPersona(persona_id);
         return new ResponseEntity<>(listaEducacion, HttpStatus.OK);
     }
-    
-    @PostMapping ("/nueva/educacion")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping ("/nueva")
     public ResponseEntity<Educacion> agregarEducacion(@RequestParam("persona_id") Long persona_id ,@RequestBody Educacion edu){
         Persona per = persoServ.buscarPersona(persona_id);
         if(per != null){
@@ -60,13 +57,15 @@ public class educacionController {
             return new ResponseEntity<>(edu, HttpStatus.BAD_REQUEST);
         }
     }
-    
-    @DeleteMapping ("/eliminar/educacion")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping ("/eliminar")
     public boolean borrarEducacion(@RequestParam("educacion_id") Long educacion_id){
         return eduServ.eliminarEducacion(educacion_id);
     }
-    
-    @PutMapping("/editar/educacion")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/editar")
     public ResponseEntity<Educacion> editarEducacion(@RequestBody Educacion edu, @RequestParam("persona_id") Long persona_id){
         Persona per = persoServ.buscarPersona(persona_id);
         if(per != null){
