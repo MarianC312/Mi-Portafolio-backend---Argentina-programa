@@ -10,7 +10,7 @@
     </parent>
     <groupId>ar.com.efecesoluciones</groupId>
     <artifactId>Portafolio</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.1</version>
     <name>Portafolio</name>
     <description>Mi portafolio - Argentina Programa</description>
     <properties>
