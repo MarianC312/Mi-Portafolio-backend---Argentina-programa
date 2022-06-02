@@ -35,6 +35,7 @@ public class CreateUsers implements CommandLineRunner {
 
         /* Descomentar para crear usuarios */
 
+        /*
         Persona persona = new Persona(null, "Mariano", "Campos", null);
         personaService.crearPersona(persona);
 
@@ -56,6 +57,8 @@ public class CreateUsers implements CommandLineRunner {
 
         // Guardo el usuario en la db
         usuarioService.save(usuario);
+
+         */
 
     }
 }

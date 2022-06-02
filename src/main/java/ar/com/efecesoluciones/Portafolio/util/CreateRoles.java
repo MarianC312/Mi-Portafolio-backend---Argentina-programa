@@ -27,7 +27,7 @@ public class CreateRoles implements CommandLineRunner {
         * los antMatchers.
         * */
 
-
+        /*
         // Rol de administrador
         Rol rolAdmin = new Rol(RolNombre.ROLE_ADMIN);
         rolService.save(rolAdmin);
@@ -35,6 +35,8 @@ public class CreateRoles implements CommandLineRunner {
         // Rol de usuario (por defecto)
         Rol rolUser = new Rol(RolNombre.ROLE_USER);
         rolService.save(rolUser);
+
+         */
 
 
 
