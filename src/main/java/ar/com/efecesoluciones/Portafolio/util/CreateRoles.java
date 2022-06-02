@@ -15,11 +15,28 @@ public class CreateRoles implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        /* Descomentar para crear roles
+        /* Descomentar para crear roles:
+        * Al crear más roles se debe agregar la etiqueta
+        * @PreAuthorize("hasRole('nombreROL')") antes de cada acción
+        * en los controladores para dar esos nuevos permisos.
+        * En este proyecto el administrador accede a todos las acciones
+        * en los endpoints de los controladores (CRUD completo)
+        * mientras que el usuario 'USER' solo acceder a los de
+        * visualización. Aunque globalmente todos los endpoints con
+        * /ver se encuentran permitidos desde la clase MainSecurity en
+        * los antMatchers.
+        * */
+
+
+        // Rol de administrador
         Rol rolAdmin = new Rol(RolNombre.ROLE_ADMIN);
-        Rol rolUser = new Rol(RolNombre.ROLE_USER);
         rolService.save(rolAdmin);
+
+        // Rol de usuario (por defecto)
+        Rol rolUser = new Rol(RolNombre.ROLE_USER);
         rolService.save(rolUser);
-        */
+
+
+
     }
 }

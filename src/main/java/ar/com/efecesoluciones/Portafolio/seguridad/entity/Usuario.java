@@ -1,8 +1,14 @@
 package ar.com.efecesoluciones.Portafolio.seguridad.entity;
 
+import ar.com.efecesoluciones.Portafolio.model.Persona;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +26,16 @@ public class Usuario {
     private String email;
     @NotNull
     private String password;
+
+    @Nullable
+    @OneToOne() //fetch = FetchType.EAGER, cascade = CascadeType.PERSIST
+    @JoinColumn(name = "persona_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    //@JsonIgnoreProperties({"hibernateLaziInitializer", "handler"})
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    //@JsonIgnore
+    private Persona persona;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
     inverseJoinColumns = @JoinColumn(name = "rol_id"))
@@ -75,6 +91,8 @@ public class Usuario {
     public void setRoles(Set<Rol> roles) {
         this.roles = roles;
     }
+
+    public void setPersona(Persona per){ this.persona = per; }
 
     public Usuario(String nombre, String nombreUsuario, String email, String password) {
         this.nombre = nombre;

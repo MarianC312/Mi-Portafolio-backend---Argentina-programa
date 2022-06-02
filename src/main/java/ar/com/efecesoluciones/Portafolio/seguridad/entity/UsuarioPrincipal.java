@@ -1,10 +1,18 @@
 package ar.com.efecesoluciones.Portafolio.seguridad.entity;
 
+import ar.com.efecesoluciones.Portafolio.model.Persona;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;

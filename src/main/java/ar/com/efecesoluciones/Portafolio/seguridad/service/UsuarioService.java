@@ -1,5 +1,6 @@
 package ar.com.efecesoluciones.Portafolio.seguridad.service;
 
+import ar.com.efecesoluciones.Portafolio.seguridad.dto.NuevoUsuario;
 import ar.com.efecesoluciones.Portafolio.seguridad.entity.Usuario;
 import ar.com.efecesoluciones.Portafolio.seguridad.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class UsuarioService {
         return usuarioRepository.existsByEmail(email);
     }
 
-    public void save(Usuario usuario){
+    public void save(Usuario usuario) {
         usuarioRepository.save(usuario);
     }
 }
