@@ -1,6 +1,10 @@
 package ar.com.efecesoluciones.Portafolio.seguridad.jwt;
 
+import ar.com.efecesoluciones.Portafolio.seguridad.dto.JwtDto;
 import ar.com.efecesoluciones.Portafolio.seguridad.entity.UsuarioPrincipal;
+import com.nimbusds.jwt.JWT;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.JWTParser;
 import io.jsonwebtoken.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,5 +62,25 @@ public class JwtProvider {
             logger.error("Firma de token incorrecta");
         }
         return false;
+    }
+
+    public String refreshToken(JwtDto jwtDto) throws ParseException {
+
+        try{
+            Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(jwtDto.getToken());
+        }catch(ExpiredJwtException e){
+            JWT jwt = JWTParser.parse(jwtDto.getToken());
+            JWTClaimsSet claims = jwt.getJWTClaimsSet();
+            String nombreUsuario = claims.getSubject();
+            List<String> roles = (List<String>) claims.getClaim("roles");
+            return Jwts.builder()
+                    .setSubject(nombreUsuario)
+                    .claim("roles", roles)
+                    .setIssuedAt(new Date())
+                    .setExpiration(new Date(new Date().getTime() + expiration * 1000))
+                    .signWith(SignatureAlgorithm.HS512, secret.getBytes())
+                    .compact();
+        }
+        return null;
     }
 }

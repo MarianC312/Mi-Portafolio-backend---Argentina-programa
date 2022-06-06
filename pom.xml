@@ -93,6 +93,13 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.10.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt -->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>9.23</version>
+        </dependency>
+
     </dependencies>
 
     <build>
