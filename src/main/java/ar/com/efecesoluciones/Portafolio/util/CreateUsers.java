@@ -33,29 +33,32 @@ public class CreateUsers implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        /* Descomentar para crear usuarios */
+        /* Si alguno gusta
+        utilizar este código puede descomentar el bloque siguiente
+        para crear el usuario y enlazar una persona.
+        Cambiá los datos en seteo persona y seteo usuario a tu gusto :D */
 
-        /*
+        /* // Seteo persona
         Persona persona = new Persona(null, "Mariano", "Campos", null);
         personaService.crearPersona(persona);
 
-        // Cambiar los parámetros para crear el usuario con los datos que quiera
+        // Seteo usuario
         Usuario usuario = new Usuario("admin", "admin", "admin@admin.com",
                 passwordEncoder.encode("admin"));
         usuario.setPersona(persona);
 
         Set<Rol> roles = new HashSet<>();
 
-        // Agrega permisos de normal al usuario que voy a crear
+        // Seteo permisos base
         roles.add(rolService.getByRolNombre(RolNombre.ROLE_USER).get());
 
-        // Agrega permisos de administrador si quiero hacerlo admin
+        // Seteo administrador
         roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
 
-        // Seteo los roles al usuario
+        // Seteo roles
         usuario.setRoles(roles);
 
-        // Guardo el usuario en la db
+        // Guardado
         usuarioService.save(usuario);
 
          */

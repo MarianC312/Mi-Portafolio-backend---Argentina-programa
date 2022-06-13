@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 /**
  *
@@ -26,7 +27,18 @@ public class Persona {
     private Long id;
     private String nombre;
     private String apellido;
+    @Nullable
     private String imagen;
+    @Nullable
+    private String facebook;
+    @Nullable
+    private String instagram;
+    @Nullable
+    private String twitter;
+    @Nullable
+    private String email;
+    @Nullable
+    private String telefono;
     
     public Persona(){
         

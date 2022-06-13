@@ -65,7 +65,6 @@ public class JwtProvider {
     }
 
     public String refreshToken(JwtDto jwtDto) throws ParseException {
-
         try{
             Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(jwtDto.getToken());
         }catch(ExpiredJwtException e){
