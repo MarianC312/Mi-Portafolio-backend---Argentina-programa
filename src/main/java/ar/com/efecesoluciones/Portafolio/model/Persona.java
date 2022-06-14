@@ -36,6 +36,8 @@ public class Persona {
     @Nullable
     private String twitter;
     @Nullable
+    private String cafecito;
+    @Nullable
     private String email;
     @Nullable
     private String telefono;
